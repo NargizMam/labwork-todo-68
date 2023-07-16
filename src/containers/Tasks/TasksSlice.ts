@@ -1,15 +1,21 @@
 import {ApiTask} from "../../types";
 import {createSlice} from "@reduxjs/toolkit";
-import {fetchTasks} from "./HomeThunk";
+import {createTask, fetchTasks} from "./TasksThunk";
 
 interface TaskState {
-    items: ApiTask[],
+    tasks: ApiTask[],
+    taskInfo: ApiTask,
     fetchLoading: boolean;
     createLoading: boolean;
     updatingLoading: boolean;
 }
 const initialState: TaskState = {
-    items: [],
+    tasks: [],
+    taskInfo: {
+        id: '',
+        title: '',
+        status: false
+    },
     fetchLoading: false,
     createLoading: false,
     updatingLoading: false,
@@ -24,10 +30,20 @@ export const tasksSlice = createSlice({
         });
         builder.addCase(fetchTasks.fulfilled, (state, action) => {
             state.fetchLoading = false;
-            state.items = action.payload;
+            state.tasks = action.payload;
         });
         builder.addCase(fetchTasks.rejected, (state) => {
             state.fetchLoading = false;
         });
+        builder.addCase(createTask.pending, (state) => {
+            state.fetchLoading = true
+        });
+        builder.addCase(createTask.fulfilled, (state) => {
+            state.fetchLoading = false;
+        });
+        builder.addCase(createTask.rejected, (state) => {
+            state.fetchLoading = false;
+        });
     }
 });
+export const tasksReducer = tasksSlice.reducer;

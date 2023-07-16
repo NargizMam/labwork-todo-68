@@ -1,10 +1,10 @@
 import React from 'react';
-import Home from "./containers/Home/Home";
+import Tasks from "./containers/Tasks/Tasks";
 
 function App() {
   return (
-    <div className="App">
-      <Home/>
+    <div>
+      <Tasks/>
     </div>
   );
 }

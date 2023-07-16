@@ -1,7 +1,7 @@
 import React from 'react';
 import {Card, Form} from "react-bootstrap";
 
-const Task = () => {
+const TaskInfo = () => {
     return (
         <>
           <Card body>
@@ -21,4 +21,4 @@ const Task = () => {
     );
 };
 
-export default Task;
+export default TaskInfo;

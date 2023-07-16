@@ -1,9 +1,10 @@
 export interface Task{
     title: string,
-    status: boolean
 }
 export interface ApiTask extends Task{
-    id: string
+    id: string,
+    status: boolean
+
 }
 export interface ApiTasksList {
     [id: string]: ApiTask
