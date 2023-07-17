@@ -14,6 +14,7 @@ const Tasks = () => {
     useEffect(() => {
         dispatch(fetchTasks());
     }, [dispatch]);
+
     return (
         <Container fluid='sm'>
             <Row>
@@ -27,7 +28,7 @@ const Tasks = () => {
                             title={task.title}
                             status={task.status}
                         />
-                    ))})
+                    ))}
                 </Col>
             </Row>
         </Container>

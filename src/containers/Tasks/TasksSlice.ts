@@ -1,6 +1,6 @@
 import {ApiTask} from "../../types";
 import {createSlice} from "@reduxjs/toolkit";
-import {completedTask, createTask, fetchTasks} from "./TasksThunk";
+import {completedTask, createTask, deleteTask, fetchTasks} from "./TasksThunk";
 
 interface TaskState {
     tasks: ApiTask[],
@@ -8,6 +8,7 @@ interface TaskState {
     fetchLoading: boolean;
     createLoading: boolean;
     updatingLoading: boolean;
+    deleteLoading: boolean;
 }
 const initialState: TaskState = {
     tasks: [],
@@ -19,6 +20,7 @@ const initialState: TaskState = {
     fetchLoading: false,
     createLoading: false,
     updatingLoading: false,
+    deleteLoading: false
 }
 export const tasksSlice = createSlice({
     name: 'tasks',
@@ -52,6 +54,15 @@ export const tasksSlice = createSlice({
         });
         builder.addCase(completedTask.rejected, (state) => {
             state.updatingLoading = false;
+        });
+        builder.addCase(deleteTask.pending, (state) => {
+            state.deleteLoading = true
+        });
+        builder.addCase(deleteTask.fulfilled, (state) => {
+            state.deleteLoading = false;
+        });
+        builder.addCase(deleteTask.rejected, (state) => {
+            state.deleteLoading = false;
         });
     }
 });

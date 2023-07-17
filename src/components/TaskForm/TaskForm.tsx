@@ -1,25 +1,22 @@
 import React, {useState} from 'react';
 import {Button, Form, InputGroup} from 'react-bootstrap';
 import {useAppDispatch, useAppSelector} from "../../app/hook";
-import {createTask} from "../../containers/Tasks/TasksThunk";
+import {createTask, fetchTasks} from "../../containers/Tasks/TasksThunk";
 import {ApiTask} from "../../types";
 
 const TaskForm = () => {
     const dispatch = useAppDispatch();
-    // const taskInfo = useAppSelector<ApiTask | null>((state) => state.tasks.taskInfo);
     const [task, setTask] = useState<string>('');
-
-    // if(taskInfo){
-    //     setTask(taskInfo.title);
-    // }
 
     const taskChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {value} = e.target;
         setTask(value);
     };
-    const getSubmit = (e: React.FormEvent) => {
+    const getSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        dispatch(createTask(task));
+        await dispatch(createTask(task));
+        setTask('');
+        dispatch(fetchTasks);
     }
 
     return (
@@ -33,6 +30,7 @@ const TaskForm = () => {
                     id="button-addon2"
                     type='submit'
                     onClick={getSubmit}
+                    disabled={task === ''}
             >
                 Create
             </Button>

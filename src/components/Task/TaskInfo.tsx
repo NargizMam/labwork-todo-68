@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Card, Form} from "react-bootstrap";
-import {useAppDispatch} from "../../app/hook";
-import {completedTask, fetchTasks} from "../../containers/Tasks/TasksThunk";
+import {useAppDispatch, useAppSelector} from "../../app/hook";
+import {completedTask, deleteTask, fetchTasks} from "../../containers/Tasks/TasksThunk";
 
 interface Props {
     id: string,
@@ -10,13 +10,14 @@ interface Props {
 }
 const TaskInfo: React.FC<Props> = ({id, status,title}) => {
     const dispatch = useAppDispatch();
-
-    const onDelete = () => {
-
+    const deleting = useAppSelector(state => state.tasks.deleteLoading);
+    const onDelete = async () => {
+        await dispatch(deleteTask(id));
+        dispatch(fetchTasks());
     };
     const onCompleted = async () => {
-        dispatch(completedTask({id, status}));
-        await dispatch(fetchTasks());
+        await dispatch(completedTask({id, status}));
+        dispatch(fetchTasks());
     };
 
     return (
@@ -25,17 +26,19 @@ const TaskInfo: React.FC<Props> = ({id, status,title}) => {
                 <div style={{display: 'flex', justifyContent: "space-between"}}>
                     <Form>
                         <Form.Check
-                            disabled
                             type={"radio"}
                             label={`completed`}
                             id={`completed`}
-                            onChange={onCompleted}
+                            onClick={onCompleted}
                             checked={status}
                         />
                     </Form>
                     <Card.Title>{title}</Card.Title>
                 </div>
-                <Button variant="outline-danger">
+                <hr/>
+                <Button variant="outline-danger"
+                        onClick={onDelete}
+                >
                     Delete
                 </Button>{' '}
             </Card>
