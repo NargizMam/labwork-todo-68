@@ -27,3 +27,17 @@ export const createTask = createAsyncThunk<void, string, {state: RootState}>(
         await axiosApi.put('/tasks.json', task);
     }
 );
+export const completedTask= createAsyncThunk<void, {id: string, status: boolean}, {state: RootState}>(
+    'task/completed',
+    async ({id, status}, thunkAPI ) => {
+
+        let newCompletedTasks = thunkAPI.getState().tasks.tasks;
+        const index = newCompletedTasks.findIndex((task => task.id === id));
+
+        let newTask = {
+            ...newCompletedTasks[index],
+            status: !status
+        };
+        await axiosApi.put('tasks/' + id + '.json', newTask);
+    }
+);

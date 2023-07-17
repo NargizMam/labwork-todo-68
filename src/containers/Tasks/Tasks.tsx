@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
-import {Col, Container, Row, Spinner} from "react-bootstrap";
-import TaskInfo from "../../components/Task/TaskInfo";
+import {Col, Container, Row} from "react-bootstrap";
 import TaskForm from "../../components/TaskForm/TaskForm";
 import {useAppDispatch, useAppSelector} from "../../app/hook";
 import {fetchTasks} from "./TasksThunk";
-import {map} from "react-bootstrap/ElementChildren";
+import Loading from "../../components/Spinner/Spinner";
+import TaskInfo from "../../components/Task/TaskInfo";
 
 const Tasks = () => {
     const dispatch = useAppDispatch()
@@ -19,7 +19,7 @@ const Tasks = () => {
             <Row>
                 <Col xs={6}>
                     <TaskForm/>
-                    {fetching ? <Spinner/> :
+                    {fetching ? <Loading/> :
                     tasks.map(task => (
                         <TaskInfo
                             key={task.id}
