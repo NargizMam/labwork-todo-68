@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Card, Form} from "react-bootstrap";
 import {useAppDispatch, useAppSelector} from "../../app/hook";
 import {completedTask, deleteTask, fetchTasks} from "../../containers/Tasks/TasksThunk";
+import BtnSpinner from "../Spinner/BtnSpinner";
 
 interface Props {
     id: string,
@@ -39,6 +40,7 @@ const TaskInfo: React.FC<Props> = ({id, status,title}) => {
                 <Button variant="outline-danger"
                         onClick={onDelete}
                 >
+                    {deleting && <BtnSpinner/>}
                     Delete
                 </Button>{' '}
             </Card>

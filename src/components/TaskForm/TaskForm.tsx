@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import {Button, Form, InputGroup} from 'react-bootstrap';
 import {useAppDispatch, useAppSelector} from "../../app/hook";
 import {createTask, fetchTasks} from "../../containers/Tasks/TasksThunk";
-import {ApiTask} from "../../types";
+import BtnSpinner from "../Spinner/BtnSpinner";
 
 const TaskForm = () => {
     const dispatch = useAppDispatch();
     const [task, setTask] = useState<string>('');
+    const creating = useAppSelector(state => state.tasks.createLoading);
 
     const taskChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {value} = e.target;
@@ -32,6 +33,7 @@ const TaskForm = () => {
                     onClick={getSubmit}
                     disabled={task === ''}
             >
+                {creating && <BtnSpinner/>}
                 Create
             </Button>
         </InputGroup>

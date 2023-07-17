@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {ApiTask, ApiTasksList, newTask, Task} from "../../types";
+import {ApiTask, ApiTasksList, newTask} from "../../types";
 import axiosApi from "../../axiosApi";
 import {RootState} from "../../app/store";
 
